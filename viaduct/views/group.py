@@ -140,7 +140,9 @@ def view_users(group_id, page_nr=1):
     users = group.get_users().order_by(User.first_name)\
         .order_by(User.last_name).paginate(page_nr, 15, False)
 
-    return render_template('group/view_users.htm', group=group, users=users)
+    groups = group.get_group().order_by(Group.name).paginate(page_nr, 15, False)
+
+    return render_template('group/view_users.htm', group=group, users=users, groups=groups)
 
 
 @blueprint.route('/groups/<int:group_id>/users/add/', methods=['GET', 'POST'])
@@ -177,21 +179,52 @@ def add_users(group_id, page_nr=1):
 
         return redirect(url_for('group.view_users', group_id=group_id))
 
-    if request.args.get('search'):
+    if request.args.get('search') != None:
         search = request.args.get('search')
         users = User.query.\
             filter(or_(User.first_name.like('%' + search + '%'),
-                       User.last_name.like('%' + search + '%'),
-                       User.email.like('%' + search + '%'),
-                       User.student_id.like('%' + search + '%')))\
-            .order_by(User.last_name).paginate(page_nr, 15, False)
-        return render_template('group/add_users.htm', group=group, users=users,
-                               search=search)
+                User.last_name.like('%' + search + '%'),
+                User.email.like('%' + search + '%'),
+                User.student_id.like('%' + search + '%'))).order_by(User.last_name).paginate(page_nr, 15, False)
+        return render_template('group/add_users.htm', group=group, users=users, search=search)
 
-    users = User.query.order_by(User.first_name).order_by(User.last_name)\
-        .paginate(page_nr, 15, False)
+    users = User.query.order_by(User.first_name).order_by(User.last_name).paginate(page_nr, 15, False)
 
     return render_template('group/add_users.htm', group=group, users=users)
+
+@blueprint.route('/groups/<int:group_id>/groups/add/', methods=['GET', 'POST'])
+@blueprint.route('/groups/<int:group_id>/groups/add/<int:page_nr>', methods=['GET', 'POST'])
+def add_groups(group_id, page_nr=1):
+    if not(GroupPermissionAPI.can_write('group')):
+        return abort(403);
+
+    group = Group.query.filter(Group.id==group_id).first()
+
+    if not group:
+        flash('Groep niet gevonden. ')
+
+        return redirect(url_for('group.view'))
+
+    if request.method == 'POST':
+        group_ids = request.form.getlist('select')
+        groups = Group.query.filter(Group.id.in_(group_ids)).order_by(Group.name).all()
+
+        for sub_group in groups:
+            group.add_group(sub_group)
+
+        db.session.add(group)
+        db.session.commit()
+
+        if len(group_ids) >1:
+            flash('De geselecteerde groepen zijn aan de groep toegevoegd.', 'success')
+        else:
+            flash('De geslecteerde groep is aan de groep toegevoegd.', 'success')
+
+        return redirect(url_for('group.view_users', group_id=group_id))
+
+    groups = Group.query.order_by(Group.name).paginate(page_nr, 15, False)
+
+    return render_template('group/add_groups.htm', group=group, groups=groups)
 
 
 @blueprint.route('/groups/edit-permissions/<int:group_id>/',
