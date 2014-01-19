@@ -6,47 +6,70 @@
 
 {%block content %}
 <div class="row">
-	<div class="span12">
-		<form method="get" action="" enctype=multipart/form-data class="form-inline" >
-			<input name="search" id="search" class="span5" type="text" placeholder="Zoeken" value="{{search}}"></input>
-			<button type="submit" class="btn btn-primary"> <i class="icon-search icon-white" id="submit"></i></button>
-		</form>
-	</div>
+    <div class="span12">
+        <form method="get" action="" enctype=multipart/form-data class="form-inline" >
+            <input name="search" id="search" class="span5" type="text" placeholder="Zoeken" value="{{search}}"></input>
+            <button type="submit" class="btn btn-primary"> <i class="icon-search icon-white" id="submit"></i></button>
+        </form>
+    </div>
 </div>
 <form action="" method="post" name="group_view_users">
-	<fieldset>
-		<legend>{{ group.name }} users</legend>
+    <fieldset>
+        <legend>{{ group.name }} users</legend>
 
-		<table class="table table-bordered table-striped">
-			<thead>
-				<tr>
-					<th>User name</th>
-				</tr>
-			</thead>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>User name</th>
+                </tr>
+            </thead>
 
-			<tbody>
-				{% for user in users.items %}
-					<tr>
-						<td>
-							<label class="checkbox">
-								<input type=checkbox name="select"
-									value="{{ user.id }}"/> {{ user.first_name }}
-										{{ user.last_name }}
-							</label>
-						</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+            <tbody>
+                {% for user in users.items %}
+                    <tr>
+                        <td>
+                            <label class="checkbox">
+                                <input type=checkbox name="select"
+                                    value="{{ user.id }}"/> {{ user.first_name }}
+                                        {{ user.last_name }}
+                            </label>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-		<div class="btn-group">
-			<a href="{{ url_for('group.add_users', group_id=group.id) }}" class="btn">Add</a>
-			<button type="submit" class="btn">Delete</button>
-			<a href="{{ url_for('group.view') }}" class="btn">Back</a>
-		</div>
+        <legend>{{ group.name  }} groepen</legend>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Groep naam</th>
+                </tr>
+            </thead>
 
-		{{ render_pagination(users, 'group.view_users', group_id=group.id) }}
-	</fieldset>
+            <tbody>
+                {% for group in groups.items %}
+                    <tr>
+                        <td>
+                            <label class="checkbox">
+                                <input type=checkbox name"select"
+                                    value="{{ group.id }}"/> {{ group.name }}
+                            </label>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="btn-group">
+            <a href="{{ url_for('group.add_users', group_id=group.id) }}" class="btn">Add User</a>
+            <a href="{{ url_for('group.add_groups', group_id=group.id) }}" class="btn">Add Group</a>
+            <button type="submit" class="btn">Delete</button>
+            <a href="{{ url_for('group.view') }}" class="btn">Back</a>
+        </div>
+
+        {{ render_pagination(users, 'group.view_users', group_id=group.id) }}
+    </fieldset>
 </form>
 {% endblock %}
 
