@@ -6,15 +6,15 @@
 <h1>Gebruiker overzicht</h1>
 
 <div class="row">
-	<div class="span12">
+	<div class="col-md-12">
 		<form method="get" action="{{ url_for('user.view') }}" enctype=multipart/form-data class="form-inline" >
-			<input name="search" id="search" class="span5" type="text" placeholder="Zoeken" value="{{search}}"></input>
-			<button type="submit" class="btn btn-primary"> <i class="icon-search icon-white" id="submit"></i></button>
+			<input name="search" id="search" class="col-md-5" type="text" placeholder="Zoeken" value="{{search}}"></input>
+			<button type="submit" class="btn btn-primary"> <i class="glyphicon glyphicon-search icon-white" id="submit"></i></button>
 		</form>
 	</div>
 </div>
 <div class="row">
-	<div class="span12">
+	<div class="col-md-12">
 		<form method="post" name="user_view">
 			<table class="table table-striped">
 				<thead>
@@ -25,6 +25,8 @@
 						<th>Student ID
 						<th>Studie
 						<th>Lid
+						<th>Erelid
+						<th>Begunstiger
 						<th>
 					</tr>
 				</thead>
@@ -41,9 +43,11 @@
 							<td>{{ user.last_name }}
 							<td>{{ user.student_id }}
 							<td>{{ user.education.name }}
-							<td>{% if user.has_payed %}<i class="icon-ok"></i>{% endif %}
+							<td>{% if user.has_payed %}<i class="glyphicon glyphicon-ok"></i>{% endif %}
+							<td>{% if user.honorary_member %}<i class="glyphicon glyphicon-ok"></i>{% endif %}
+							<td>{% if user.favourer %}<i class="glyphicon glyphicon-ok"></i>{% endif %}
 							<td>
-								<a class="btn btn-mini btn-primary" href="{{ url_for('user.view_single', user_id=user.id) }}">
+								<a class="btn btn-xs btn-primary" href="{{ url_for('user.view_single', user_id=user.id) }}">
 									Bekijken
 								</a>
 						</tr>
@@ -53,13 +57,17 @@
 
 			<div class="btn-group">
 				<a href="/users/create" class="btn btn-success">
-					<i class="icon-user"></i> Gebruiker aanmaken
+					<i class="glyphicon glyphicon-user"></i> Gebruiker aanmaken
 				</a>
 
 				<button type="submit" class="btn btn-danger">
-					<i class="icon-remove"></i>
+					<i class="glyphicon glyphicon-remove"></i>
 					Verwijderen
 				</button>
+
+				<a href="/users/export" class="btn btn-success">
+					<i class="glyphicon glyphicon-linux"></i> Gebruikers Exporteren
+				</a>
 			</div>
 
 			{{ render_pagination(users, 'user.view', "?search=" + search) }}

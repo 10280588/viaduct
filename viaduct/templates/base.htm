@@ -2,87 +2,101 @@
 
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Studievereniging VIA - {% block title %}{% endblock %}</title>
+    <head>
+        <title>Studievereniging VIA - {% block title %}{% endblock %}</title>
 
-		<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="/static/img/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon">
 
-		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-		<link href='/static/css/timepicker.css' rel='stylesheet'>
-		<link href='/static/css/datepicker.css' rel='stylesheet'>
-		<link href="/static/css/bootstrap.css" rel="stylesheet">
-		<link href="/static/css/bootstrap-editable.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link href='/static/css/timepicker.css' rel='stylesheet'>
+        <link href='/static/css/datepicker.css' rel='stylesheet'>
 
 
-		<link href="/static/css/custom.css" rel="stylesheet" />
-		<link href='/static/css/datepicker.css' rel='stylesheet'>
+        <link href="/static/css/custom.css" rel="stylesheet" />
 
-		<script src="/static/js/jquery.js"></script>
-		<script src='/static/js/datepicker.js'></script>
-		<script src="/static/js/bootstrap.min.js"></script>
-		<script src="/static/js/throttle.js"></script>
-		<script src="/static/js/jquery.expander.min.js"></script>
-		<script src="/static/js/confirmation.js"></script>
-		<script src="/static/js/twitter-bootstrap-hover-dropdown.min.js"></script>
-		<script src='/static/js/datepicker.js'></script>
-		<script src='/static/js/timepicker.js'></script>
-		<script src='/static/js/flash.js'></script>
-		<script src="/static/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-		<script src="/static/jquery-ui/ui/minified/jquery.ui.sortable.min.js"></script>
-		<script src="/static/js/sprintf.min.js"></script>
-		<script src="/static/js/jquery.insert-at-caret.js"></script>
-		<script src="/static/js/bootstrap-editable.js"></script>
-		<script src="/static/js/custom.js"></script>
+        <script src="/static/js/jquery.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    
+        <script src="/static/js/analytics.js"></script>
+        <script src="/static/js/throttle.js"></script>
+        <script src="/static/js/jquery.expander.min.js"></script>
+        <script src="/static/js/confirmation.js"></script>
+        <script src="/static/js/twitter-bootstrap-hover-dropdown.min.js"></script>
+        <script src='/static/js/timepicker.js'></script>
+        <script src='/static/js/flash.js'></script>
+        <script src="/static/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+        <script src="/static/jquery-ui/ui/minified/jquery.ui.sortable.min.js"></script>
+        <script src="/static/js/sprintf.min.js"></script>
+        <script src="/static/js/jquery.insert-at-caret.js"></script>
+        <script src='/static/js/datepicker.js'></script>
+        <script src="/static/js/jquery-carousel.js"></script>
+        <script src="/static/js/custom.js"></script>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	</head>
+        <!-- <script src="http://localhost/handiger/handiger.js"></script> -->
 
-	<body>
-		<div class="container">
-			<div class="row">
-				<div class="span4">
-					<a href="/"><img class="logo" src="/static/img/via.png" alt="VIA" /></a>
-				</div>
-				<div class="span5 offset3">
-					<div class="row"><div class="span4 offset1" id="sublogo">
-						{% block sublogo %}{% endblock %}
-					</div></div>
-					<div class="row"><div class="span5" id="login-info">
-						{% if not current_user or current_user.is_anonymous() %}
-							Niet ingelogd, <a href="{{ url_for('user.sign_in') }}">log in</a> of <a href="{{ url_for('user.sign_up') }}">registreer</a>.
-						{% else %}
-							Ingelogd als <a href="{{ url_for('user.view_single', user_id=current_user.id) }}">{{ current_user.name }}</a>, <a href="{{ url_for('user.sign_out') }}">uitloggen</a>.
-						{% endif %}
-					</div></div>
-				</div>
-			</div>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
 
-			<div class="row">
-				<div class="span12">
-						{{ NavigationAPI.get_navigation_bar()|safe }}
-				</div>
-			</div>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="/"><img class="logo" src="/static/img/via.png" alt="VIA" /></a>
+                </div>
+                <div class="col-md-5 col-md-offset-3">
+                    <div class="row"><div class="col-md-4 col-md-offset-1" id="sublogo">
+                        {% block sublogo %}{% endblock %}
+                    </div></div>
+                    <div class="row"><div class="col-md-12" id="login-info">
+                        {% if not current_user or current_user.is_anonymous() %}
+                            Niet ingelogd, <a href="{{ url_for('user.sign_in') }}">log in</a> of <a href="{{ url_for('user.sign_up') }}">registreer</a>.
+                        {% else %}
+                            Ingelogd als <a href="{{ url_for('user.view_single', user_id=current_user.id) }}">{{ current_user.name }}</a>, <a href="{{ url_for('user.sign_out') }}">uitloggen</a>.
+                        {% endif %}
+                    </div></div>
+                </div>
+            </div>
 
-			<div class="row">
-				<div class="span12" id="messages">
-					{{ render_flash() }}
-				</div>
-			</div>
+            <div class="row">
+                <div class="col-md-12">
+                        {{ NavigationAPI.get_navigation_bar()|safe }}
+                </div>
+            </div>
 
-			{% block page %}
-			{% endblock %}
+            <div class="row">
+                <div class="col-md-12" id="messages">
+                    {{ render_flash() }}
+                </div>
+            </div>
 
-			<div class="row sponsors">
-					<div class="span3"><a href="http://www.copernica.com/nl/over-ons/vacatures"><img src="/static/img/sponsors/copernica.png" alt="Copernica" /></a></div>
-					<div class="span3"><a href="http://www.werkenbijquinity.nl/welkom"><img src="/static/img/sponsors/quinity.png" alt="Focum" /></a></div>
-					<div class="span3"><a href="http://www.optiver.com/amsterdam/"><img src="/static/img/sponsors/optiver.png" alt="Focum" /></a></div>
-					<div class="span3"><a href="http://www.focum.nl/"><img src="/static/img/sponsors/focum.png" alt="Focum" /></a></div>
-			</div>
-		</div>
-
-	<script src='/static/js/textarea.js'></script>
-
-	</body>
+            {% block page %}
+            {% endblock %}
+            <div class="row">
+                <div id="carousel">
+                    <div class="col-md-2 logo_wrapper"><a href="http://www.copernica.com/nl/over-ons/vacatures"><img class="logo_img" src="/static/img/sponsors/copernica.png" alt="copernica" /></a>
+                        <a href="http://www.copernica.com/nl/over-ons/vacatures"><span>Copernica</span></a>
+                    </div>
+                    <div class="col-md-2 logo_wrapper"><a href="http://www.onehippo.com/"><img class="logo_img" src="/static/img/sponsors/hippo.png" alt="hippo" /></a>
+                        <a href="http://www.onehippo.com/"><span>Hippo</span></a>
+                    </div>
+                    <div class="col-md-2 logo_wrapper"><a href="http://www.werkenbijquinity.nl/welkom"><img class="logo_img" src="/static/img/sponsors/quinity.png" alt="quinity" /></a>
+                        <a href="http://www.werkenbijquinity.nl/welkom"><span>Quinity</span></a>
+                    </div>
+                    <div class="col-md-2 logo_wrapper"><a href="http://www.ireckon.nl/"><img class="logo_img" src="/static/img/sponsors/ireckon.png" alt="ireckon" /></a>
+                        <a href="http://www.ireckon.nl/"><span>iReckon</span></a>
+                    </div>
+                    <div class="col-md-2 logo_wrapper"><a href="http://www.micompany.nl/"><img class="logo_img" src="/static/img/sponsors/micompany.jpg" alt="micompany" /></a>
+                        <a href="http://www.micompany.nl/"><span>Micompany</span></a>
+                    </div>
+                    <div class="col-md-2 logo_wrapper"><a href="http://www.optiver.com/amsterdam/"><img class="logo_img" src="/static/img/sponsors/optiver.png" alt="fruit6" /></a>
+                        <a href="http://www.optiver.com/amsterdam/"><span>Optiver</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src='/static/js/textarea.js'></script>
+    </body>
 </html>
