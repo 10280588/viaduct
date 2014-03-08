@@ -9,7 +9,6 @@ user_group = db.Table('user_group', db.Column('user_id', db.Integer,
                                 db.ForeignKey('group.id')))
 
 
-<<<<<<< HEAD
 group_group = db.Table('group_group',
     db.Column('super_id', db.Integer, db.ForeignKey('group.id')),
     db.Column('sub_id', db.Integer, db.ForeignKey('group.id'))
